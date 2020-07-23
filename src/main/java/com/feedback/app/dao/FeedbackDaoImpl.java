@@ -77,15 +77,25 @@ public class FeedbackDaoImpl implements FeedbacksTrackerInterface {
 	}
 
 	@Override
-	public List<Feedback> viewFeedbacks(long employeeId) {
+	public List<Feedback> viewFeedbacks(String id) {
 		Query query = new Query();
-		query.addCriteria(Criteria.where("employeeId").is(employeeId));
+		query.addCriteria(Criteria.where("id").is(id));
 		List<Feedback> isEmployeePresent = mongoTemplate.find(query,Feedback.class);
 		if (isEmployeePresent != null) {
-			logger.info("Feedback Existed List");
+			logger.info("Feedback Existed List for id");
 			return isEmployeePresent;
 		} else {
 			return null;
 		}
     }
+
+	public List<Feedback> viewAllFeedbacks() {
+		List<Feedback> allFeedbackList = mongoTemplate.findAll(Feedback.class);
+		if (allFeedbackList != null) {
+			logger.info("Feedback Existed List for All");
+			return allFeedbackList;
+		} else {
+			return null;
+		}
+	}
     }

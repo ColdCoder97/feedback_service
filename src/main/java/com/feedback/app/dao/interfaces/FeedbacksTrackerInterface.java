@@ -8,5 +8,5 @@ public interface FeedbacksTrackerInterface {
     public boolean insertFeedback(Feedback feedback);
     public Feedback editFeedback(String id, Feedback Feedback);
     public boolean deleteFeedback(String id);
-    public List<Feedback> viewFeedbacks(long employeeId);
+    public List<Feedback> viewFeedbacks(String id);
 }

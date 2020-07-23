@@ -48,7 +48,6 @@ public class FeedbackController {
 			}
 			}
 		}
-
 		catch (AuthenticationFailureException exception) {
 			logger.error(" Authentication Failure : "+exception.getMessage());
 			FeedBackFailureResponse feedBackFailureResponse = FailureUtils.getFailureResponse(String.valueOf(clientName),
@@ -70,7 +69,7 @@ public class FeedbackController {
 		return new ResponseEntity<FeedbackAppBaseResponse>(responseAddFeedback, HttpStatus.ACCEPTED);
 
 	}
-	@GetMapping("/v1/feedbacks/{employeeId}")
+	/*@GetMapping("/v1/feedbacks/{employeeId}")
 	public ResponseEntity getAllExistedFeedback(@PathVariable String employeeId) {
 		long empId=Long.valueOf(employeeId);
 		AllFeedBacksResponse allFeedBacksResponse=new AllFeedBacksResponse();
@@ -86,6 +85,44 @@ public class FeedbackController {
 			return new ResponseEntity<FeedBackFailureResponse>(feedBackFailureResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		logger.info("Feedback view request completed for EmployeeId" + employeeId);
+		return new ResponseEntity<AllFeedBacksResponse>(allFeedBacksResponse, HttpStatus.ACCEPTED);
+
+	}*/
+	// id base getting all records
+	@GetMapping("/v1/feedbacks/{id}")
+	public ResponseEntity getAllFeedback(@PathVariable String id) {
+
+		AllFeedBacksResponse allFeedBacksResponse=new AllFeedBacksResponse();
+		try {
+			logger.info(" View request received from id:" +id);
+			allFeedBacksResponse = feedbackService.viewFeedbacks(id);
+		}
+		catch (Exception e) {
+			logger.error("Internal Server Exception: " + e);
+			FeedBackFailureResponse feedBackFailureResponse = FailureUtils.getFailureResponse(id,
+					e.getMessage(), Enum.RequestStatus.FAILURE.name(), Constants.StatusCode.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<FeedBackFailureResponse>(feedBackFailureResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		logger.info("Feedback view request completed for id" + id);
+		return new ResponseEntity<AllFeedBacksResponse>(allFeedBacksResponse, HttpStatus.ACCEPTED);
+
+	}
+	// Existed all records view
+	@GetMapping("/v1/feedbacks")
+	public ResponseEntity getAllExistedFeedback() {
+
+		AllFeedBacksResponse allFeedBacksResponse=new AllFeedBacksResponse();
+		try {
+			logger.info(" View request received for All");
+			allFeedBacksResponse = feedbackService.viewAllFeedbacks();
+		}
+		catch (Exception e) {
+			logger.error("Internal Server Exception: " + e);
+			FeedBackFailureResponse feedBackFailureResponse = FailureUtils.getFailureResponse("AllUser",
+					e.getMessage(), Enum.RequestStatus.FAILURE.name(), Constants.StatusCode.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<FeedBackFailureResponse>(feedBackFailureResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		logger.info("Feedback view request completed for All");
 		return new ResponseEntity<AllFeedBacksResponse>(allFeedBacksResponse, HttpStatus.ACCEPTED);
 
 	}

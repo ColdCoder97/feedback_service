@@ -23,7 +23,7 @@ import static com.feedback.app.utils.Constants.*;
 
 /*
  * Created by 1430208-Yamini S
- * Service Class for UserDetails.
+ * Service Class for FeedbackService.
  */
 @Service
 public class FeedbackService {
@@ -56,12 +56,25 @@ public class FeedbackService {
 		return feedbackAppBaseResponse;
 	}
 
-	public AllFeedBacksResponse viewFeedbacks(long employeeId) {
+	public AllFeedBacksResponse viewFeedbacks(String id) {
 		AllFeedBacksResponse allFeedBacksResponse = new AllFeedBacksResponse();
-		List<Feedback> feedbacksList = feedbackDao.viewFeedbacks(employeeId);
+		List<Feedback> feedbacksList = feedbackDao.viewFeedbacks(id);
 		allFeedBacksResponse.setStatus(Constants.StatusCode.SUCCESS);
 		allFeedBacksResponse.setFeedbacks(feedbacksList);
-		allFeedBacksResponse.setResponseId(String.valueOf(employeeId));
+		allFeedBacksResponse.setResponseId(id);
+		if (feedbacksList != null && feedbacksList.size()!=0) {
+			allFeedBacksResponse.setMessage(RECORDS_FOUND);
+		} else {
+			allFeedBacksResponse.setMessage(NO_RECORDS_FOUND);
+		}
+		return allFeedBacksResponse;
+	}
+	public AllFeedBacksResponse viewAllFeedbacks() {
+		AllFeedBacksResponse allFeedBacksResponse = new AllFeedBacksResponse();
+		List<Feedback> feedbacksList = feedbackDao.viewAllFeedbacks();
+		allFeedBacksResponse.setStatus(Constants.StatusCode.SUCCESS);
+		allFeedBacksResponse.setFeedbacks(feedbacksList);
+		allFeedBacksResponse.setResponseId("AllUser");
 		if (feedbacksList != null) {
 			allFeedBacksResponse.setMessage(RECORDS_FOUND);
 		} else {

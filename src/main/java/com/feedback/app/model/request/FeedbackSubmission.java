@@ -13,7 +13,7 @@ public class FeedbackSubmission {
     private String isContentRelevant;
     private String contentHandsOn;
     private String proficiencyLevel;
-    private int ratingContent;
-    private int ratingHandsOn;
+    private String ratingContent;
+    private String ratingHandsOn;
     private String comment;
 }
