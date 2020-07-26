@@ -172,7 +172,7 @@ Input Body:
 Output Body:
 {
     "responseId": "5f1dc5f10347472fc88e8fa4",
-    "message": "Feedback records found ",
+    "message": "Feedback records found "
     "status": 200,
     "feedbacks": [
         {
