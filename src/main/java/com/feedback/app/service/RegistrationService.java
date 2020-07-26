@@ -6,31 +6,29 @@ import com.feedback.app.exception.BadRequestException;
 import com.feedback.app.exception.EntryAlreadyExistException;
 import com.feedback.app.model.request.LoginRequest;
 import com.feedback.app.model.request.RegistrationRequest;
-import com.feedback.app.model.response.FeedBackFailureResponse;
 import com.feedback.app.model.response.FeedbackAppBaseResponse;
 import com.feedback.app.utils.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import static com.feedback.app.utils.Constants.RECORD_ALREADY_EXIST;
 import static com.feedback.app.utils.Constants.VALIDATION_FAILURE;
 
-/*
- * Created by 1430208-Yamini S
- * Service Class for Login.
+/**
+ * The service program helps to redirect registration model request to repository
+ * @author  Yamini S
+ * @version 1.0
+ * @since   2020-07-21
  */
 @Service
 public class RegistrationService {
 
     @Autowired
     private RegistrationDaoImpl registrationDaoImpl;
-
+    /**
+     * @method addUser with RegistrationRequest
+     * @exception EntryAlreadyExistException data already exists
+     * @result FeedbackAppBaseResponse as response entity
+     */
     public FeedbackAppBaseResponse addUser(RegistrationRequest registration) throws Exception {
         FeedbackAppBaseResponse feedbackAppBaseResponse=new FeedbackAppBaseResponse();
         UserRegister entity=new UserRegister();
@@ -53,7 +51,11 @@ public class RegistrationService {
             }
            return feedbackAppBaseResponse;
     }
-
+    /**
+     * @method login with LoginRequest
+     * @exception BadRequestException invalid data as input
+     * @result FeedbackAppBaseResponse as response entity
+     */
     public FeedbackAppBaseResponse login(LoginRequest login) throws Exception {
         FeedbackAppBaseResponse feedbackAppBaseResponse = new FeedbackAppBaseResponse();
         UserRegister isLoginResponse = registrationDaoImpl.loginUser(login);

@@ -15,17 +15,23 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 
-/*
- * Created by 1430208-Yamini S
- * Dao Class for register user request base.
+/**
+ * The repository program helps to implements an application registration
+ * @author  Yamini S
+ * @version 1.0
+ * @since   2020-07-21
  */
+
 @Repository
 @Slf4j
 public class RegistrationDaoImpl implements RegistrationTrackerInterface {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationDaoImpl.class);
     @Autowired
     private MongoTemplate mongoTemplate;
-
+    /**
+     * @method adds User UserRegister as args
+     * @result as true or false
+     */
     @Override
     public boolean addUser(UserRegister userRegister) throws IOException {
         Query query = new Query();
@@ -39,7 +45,10 @@ public class RegistrationDaoImpl implements RegistrationTrackerInterface {
             return true;
         }
     }
-
+    /**
+     * @method login User LoginRequest as args
+     * @result as LoginRequest list or null
+     */
     @Override
     public UserRegister loginUser(LoginRequest loginRequest) {
         Query query = new Query();

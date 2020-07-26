@@ -4,9 +4,11 @@ package com.feedback.app.entity;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/*
- * Created by 1430208-Yamini S
- * Entity Class for User.
+/**
+ * The entity program helps to implements an application registration
+ * @author  Yamini S
+ * @version 1.0
+ * @since   2020-07-21
  */
 @Document
 @Data

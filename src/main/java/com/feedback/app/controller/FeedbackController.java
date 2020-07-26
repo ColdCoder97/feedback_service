@@ -17,12 +17,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.feedback.app.utils.ClientsAuthValidator.validateClient;
 
-/*
- * Created by 1430208-Yamini S
- * Controller Class for FeedbackController api which does logged-in user requires crud operations.
- * Changes - Account Base
+/**
+ * The Controller program implements an application feedback
+ * logged in user adds feedback
+ * @author  Yamini S
+ * @version 1.0
+ * @since   2020-07-21
  */
 @CrossOrigin(origins = "*")
 @RestController
@@ -34,6 +35,12 @@ public class FeedbackController {
 	@Autowired
 	private FeedbackService feedbackService;
 
+	/**
+	 * @method insertFeedback with FeedbackSubmission request.
+	 * @exception AuthenticationFailureException invalid user enters input
+	 * @exception BadRequestException invalid data as input
+	 * @result adds valid data
+	 */
 	@PostMapping( "/v1/addFeedback")
 	public ResponseEntity insertFeedback(@RequestBody FeedbackSubmission request,@RequestHeader("x-client-id") String clientName,@RequestHeader("x-client-key") String clientValue) {
 		FeedbackAppBaseResponse responseAddFeedback=new FeedbackAppBaseResponse();
@@ -69,28 +76,14 @@ public class FeedbackController {
 		return new ResponseEntity<FeedbackAppBaseResponse>(responseAddFeedback, HttpStatus.ACCEPTED);
 
 	}
-	/*@GetMapping("/v1/feedbacks/{employeeId}")
-	public ResponseEntity getAllExistedFeedback(@PathVariable String employeeId) {
-		long empId=Long.valueOf(employeeId);
-		AllFeedBacksResponse allFeedBacksResponse=new AllFeedBacksResponse();
-		try {
-			logger.info(" View request received from emp id:" +empId);
-			logger.info(" View request received from employee id:" +employeeId);
-			 allFeedBacksResponse = feedbackService.viewFeedbacks(empId);
-		}
-		catch (Exception e) {
-			logger.error("Internal Server Exception: " + e);
-			FeedBackFailureResponse feedBackFailureResponse = FailureUtils.getFailureResponse(String.valueOf(employeeId),
-					e.getMessage(), Enum.RequestStatus.FAILURE.name(), Constants.StatusCode.INTERNAL_SERVER_ERROR);
-			return new ResponseEntity<FeedBackFailureResponse>(feedBackFailureResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		logger.info("Feedback view request completed for EmployeeId" + employeeId);
-		return new ResponseEntity<AllFeedBacksResponse>(allFeedBacksResponse, HttpStatus.ACCEPTED);
 
-	}*/
-	// id base getting all records
+	/**
+	 * @method getFeedback with id request.
+	 * @exception Exception server not connected
+	 * @result view valid data for id only
+	 */
 	@GetMapping("/v1/feedbacks/{id}")
-	public ResponseEntity getAllFeedback(@PathVariable String id) {
+	public ResponseEntity getFeedback(@PathVariable String id) {
 
 		AllFeedBacksResponse allFeedBacksResponse=new AllFeedBacksResponse();
 		try {
@@ -107,14 +100,18 @@ public class FeedbackController {
 		return new ResponseEntity<AllFeedBacksResponse>(allFeedBacksResponse, HttpStatus.ACCEPTED);
 
 	}
-	// Existed all records view
+	/**
+	 * @method getFeedback with  request.
+	 * @exception Exception server not connected
+	 * @result views all data valid
+	 */
 	@GetMapping("/v1/feedbacks")
-	public ResponseEntity getAllExistedFeedback() {
+	public ResponseEntity getFeedback() {
 
 		AllFeedBacksResponse allFeedBacksResponse=new AllFeedBacksResponse();
 		try {
 			logger.info(" View request received for All");
-			allFeedBacksResponse = feedbackService.viewAllFeedbacks();
+			allFeedBacksResponse = feedbackService.viewFeedbacks();
 		}
 		catch (Exception e) {
 			logger.error("Internal Server Exception: " + e);
@@ -126,6 +123,12 @@ public class FeedbackController {
 		return new ResponseEntity<AllFeedBacksResponse>(allFeedBacksResponse, HttpStatus.ACCEPTED);
 
 	}
+	/**
+	 * @method editFeedback with id,FeedbackSubmission request.
+	 * @exception BadRequestException invalid data as input
+	 * @exception Exception server not connected
+	 * @result updates existed valid data as per id
+	 */
 	@PutMapping("/v1/feedback/{id}")
 	public ResponseEntity editFeedback(@PathVariable String id, @RequestBody FeedbackSubmission feedback) {
 		FeedbackAppBaseResponse responseUpdateFeedback = new FeedbackAppBaseResponse();
@@ -151,8 +154,14 @@ public class FeedbackController {
 		logger.info("Feedback updation completed for EmployeeId");
 		return new ResponseEntity<FeedbackAppBaseResponse>(responseUpdateFeedback, HttpStatus.ACCEPTED);
 	}
+	/**
+	 * @method deleteFeedback with id
+	 * @exception BadRequestException invalid data as input
+	 * @exception Exception server not connected
+	 * @result removes existed data as per id
+	 */
 	@DeleteMapping("/v1/feedback/{id}")
-	public ResponseEntity editFeedback(@PathVariable String id) {
+	public ResponseEntity deleteFeedback(@PathVariable String id) {
 		FeedbackAppBaseResponse responseRemoveFeedback = new FeedbackAppBaseResponse();
 		try {
 			logger.info(" Delete request received from employee id:" + id);

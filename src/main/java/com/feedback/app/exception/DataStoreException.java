@@ -2,7 +2,12 @@ package com.feedback.app.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
+/**
+ * The exception program helps to implements an data not found
+ * @author  Yamini S
+ * @version 1.0
+ * @since   2020-07-21
+ */
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class DataStoreException extends RuntimeException{
     public DataStoreException(String message) {

@@ -3,7 +3,12 @@ package com.feedback.app.entity;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+/**
+ * The entity program helps to implements an application feedback
+ * @author  Yamini S
+ * @version 1.0
+ * @since   2020-07-21
+ */
 @Document
 @Data
 public class Feedback {

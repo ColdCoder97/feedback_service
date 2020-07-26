@@ -19,10 +19,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/*
-* Created by 1430208-Yamini S
-* Controller Class for login api which performs operations adding and login user.
-*/
+/**
+ * The Controller program implements an application registration
+ * registration user added and verifies for login
+ * @author  Yamini S
+ * @version 1.0
+ * @since   2020-07-21
+ */
 @CrossOrigin(origins = "*")
 @RestController
 @Slf4j
@@ -34,6 +37,12 @@ public class RegistrationController {
     @Autowired
     private RegistrationService registrationService;
 
+    /**
+     * @method addUser with RegistrationRequest.
+     * @exception BadRequestException invalid data as input
+     * @exception EntryAlreadyExistException input data already existed
+     * @result adds valid data
+     */
 	@PostMapping( "/v1/register")
     public ResponseEntity addUser(@RequestBody RegistrationRequest request) {
         FeedbackAppBaseResponse registerSuccessResponse=new FeedbackAppBaseResponse();
@@ -66,6 +75,11 @@ public class RegistrationController {
 
     }
 
+    /**
+     * @method userLogin with LoginRequest.
+     * @exception BadRequestException invalid data as input
+     * @result allow valid user
+     */
     @PostMapping( "/v1/login")
     public ResponseEntity userLogin(@RequestBody LoginRequest login) {
         FeedbackAppBaseResponse loginSuccessResponse=new FeedbackAppBaseResponse();

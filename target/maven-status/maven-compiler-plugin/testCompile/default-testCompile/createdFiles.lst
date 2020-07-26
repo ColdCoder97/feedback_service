@@ -1,0 +1,6 @@
+com\feedback\app\utils\FailureUtilsTest.class
+com\feedback\app\utils\FieldValidationTest.class
+com\feedback\app\utils\ClientsAuthValidatorTest.class
+com\feedback\app\dao\RegistrationDaoImplTest.class
+com\feedback\app\service\FeedbackServiceTest.class
+com\feedback\app\service\RegistrationServiceTest.class

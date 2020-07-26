@@ -3,6 +3,7 @@ package com.feedback.app.service;
 import com.feedback.app.dao.FeedbackDaoImpl;
 import com.feedback.app.entity.Feedback;
 import com.feedback.app.entity.UserRegister;
+import com.feedback.app.exception.AuthenticationFailureException;
 import com.feedback.app.exception.BadRequestException;
 import com.feedback.app.exception.DataStoreException;
 import com.feedback.app.exception.EntryAlreadyExistException;
@@ -21,16 +22,22 @@ import java.util.List;
 
 import static com.feedback.app.utils.Constants.*;
 
-/*
- * Created by 1430208-Yamini S
- * Service Class for FeedbackService.
+/**
+ * The service program helps to redirect feedback model request to repository
+ * @author  Yamini S
+ * @version 1.0
+ * @since   2020-07-21
  */
 @Service
 public class FeedbackService {
 
 	@Autowired
 	private FeedbackDaoImpl feedbackDao;
-
+	/**
+	 * @method insertFeedback with FeedbackSubmission request.
+	 * @exception BadRequestException invalid data as input
+	 * @result FeedbackAppBaseResponse as response entity
+	 */
 	public FeedbackAppBaseResponse insertFeedback(FeedbackSubmission request) throws Exception {
 		FeedbackAppBaseResponse feedbackAppBaseResponse = new FeedbackAppBaseResponse();
 		Feedback entity = new Feedback();
@@ -41,8 +48,8 @@ public class FeedbackService {
 		entity.setContentHandsOn(request.getContentHandsOn());
 		entity.setRatingContent(request.getRatingContent());
 		entity.setRatingHandsOn(request.getRatingHandsOn());
+		entity.setProficiencyLevel(request.getProficiencyLevel());
 		entity.setComment(request.getComment());
-		//should get update at when records get update
 		entity.setCreatedAt(System.currentTimeMillis());
 		entity.setUpdatedAt(System.currentTimeMillis());
 		boolean isEntryCreated = feedbackDao.insertFeedback(entity);
@@ -55,7 +62,10 @@ public class FeedbackService {
 		}
 		return feedbackAppBaseResponse;
 	}
-
+	/**
+	 * @method viewFeedbacks with id.
+	 * @result AllFeedBacksResponse as response entity
+	 */
 	public AllFeedBacksResponse viewFeedbacks(String id) {
 		AllFeedBacksResponse allFeedBacksResponse = new AllFeedBacksResponse();
 		List<Feedback> feedbacksList = feedbackDao.viewFeedbacks(id);
@@ -69,9 +79,13 @@ public class FeedbackService {
 		}
 		return allFeedBacksResponse;
 	}
-	public AllFeedBacksResponse viewAllFeedbacks() {
+	/**
+	 * @method viewFeedbacks without args.
+	 * @result AllFeedBacksResponse as response entity
+	 */
+	public AllFeedBacksResponse viewFeedbacks() {
 		AllFeedBacksResponse allFeedBacksResponse = new AllFeedBacksResponse();
-		List<Feedback> feedbacksList = feedbackDao.viewAllFeedbacks();
+		List<Feedback> feedbacksList = feedbackDao.viewFeedbacks();
 		allFeedBacksResponse.setStatus(Constants.StatusCode.SUCCESS);
 		allFeedBacksResponse.setFeedbacks(feedbacksList);
 		allFeedBacksResponse.setResponseId("AllUser");
@@ -82,6 +96,11 @@ public class FeedbackService {
 		}
 		return allFeedBacksResponse;
 	}
+	/**
+	 * @method editFeedbacks with id, FeedbackSubmission request.
+	 * @exception BadRequestException invalid data as input
+	 * @result UpdatedFeedbackResponse as response entity
+	 */
 
 	public UpdatedFeedbackResponse editFeedbacks(String id, FeedbackSubmission feedback) {
 		UpdatedFeedbackResponse updatedFeedbackResponse = new UpdatedFeedbackResponse();
@@ -105,7 +124,11 @@ public class FeedbackService {
 		}
 		return updatedFeedbackResponse;
 	}
-
+	/**
+	 * @method deleteFeedback with id
+	 * @exception BadRequestException invalid data as input
+	 * @result FeedbackAppBaseResponse as response entity
+	 */
 	public FeedbackAppBaseResponse deleteFeedback(String id) {
 		FeedbackAppBaseResponse deleteFeedbackResponse = new FeedbackAppBaseResponse();
 		boolean isDataRemoved = feedbackDao.deleteFeedback(id);
