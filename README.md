@@ -1,5 +1,5 @@
 # feedback_service
-Application allows user to share them experience on course learning.
+Application allows user to share them experience on course learning - Server
 Registration:
 ----------------
 Register User:
